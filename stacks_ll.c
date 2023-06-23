@@ -56,7 +56,7 @@ stack_t *add_dnodeint_end(stack_t **head, int n)
 	mal->n = n;
 	mal->next = NULL;
 
-	if (*mal == NULL)
+	if (*head == NULL)
 	{
 		mal->prev = NULL;
 		*head = mal;
