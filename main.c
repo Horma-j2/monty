@@ -1,6 +1,8 @@
 #define _GNU_SOURCE
 #include "monty.h"
 
+global_vars my_glob_vars;
+
 /**
  * main - main function to run interpreter logic
  * @ac: number of parameters
@@ -11,8 +13,8 @@
 
 int main(int ac, char **av)
 {
-	char *buff = NULL, *delim = " \t\n", *token = NULL;
-	size_t buff_len = 0;
+	char *buffer = NULL, *delim = " \t\n", *token = NULL;
+	size_t buff_length = 0;
 	int  line_size;
 	FILE *file_descriptor;
 
@@ -34,20 +36,20 @@ int main(int ac, char **av)
 	my_glob_vars.line_num = 0;
 	my_glob_vars.mode = 0;
 
-	line_size = getline(&buff, &buff_len, file_descriptor);
+	line_size = getline(&buffer, &buff_length, file_descriptor);
 	while (line_size >= 0)
 	{
 		my_glob_vars.line_num++;
-		token = strtok(buff, delim);
+		token = strtok(buffer, delim);
 		if (token && token[0] != '#')
 		{
 			my_glob_vars.num = strtok(NULL, delim);
 			get_op_func(token);
 		}
-		line_size = getline(&buff, &buff_len, file_descriptor);
+		line_size = getline(&buffer, &buff_length, file_descriptor);
 	}
-	free(buff);
-	buff = NULL;
+	free(buffer);
+	buffer = NULL;
 	fclose(file_descriptor);
 	free_stack_t(my_glob_vars.head);
 	return (0);
